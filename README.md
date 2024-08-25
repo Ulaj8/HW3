@@ -1,2 +1,67 @@
-# HW3
-Pia Support Bootcamp HW3
+# Ulaş'ın Flask Web Uygulaması - HW3
+
+Bu proje, Docker ve Kubernetes kullanarak basit bir Flask web uygulamasını konteynerize eder ve Kubernetes üzerinde dağıtır. Bu README dosyasında uygulamanın nasıl çalıştırılacağı ve test edileceği detaylı bir şekilde açıklanmaktadır.
+
+## Projenin Özeti
+
+Bu proje, bir Flask web uygulaması oluşturur ve bu uygulamayı Docker ile konteynerize eder. Ardından, Kubernetes kullanarak uygulamayı bir cluster üzerinde dağıtır ve  ölçeklendirme ve Ingress Controller ile destekler.
+
+## Başlarken
+
+### Gerekli Araçlar
+
+Projenin çalıştırılması için aşağıdaki araçların sisteminizde yüklü olması gerekmektedir:
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [Kubernetes](https://kubernetes.io/)
+- [Python 3.9+](https://www.python.org/)
+
+### Proje Kurulumu
+
+1. Proje dizinini klonlayın veya oluşturun:
+    ```bash
+    git clone <repository-link>
+    cd hw3
+    ```
+
+2. Gerekli Python paketlerini yükleyin:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. Docker imajını oluşturun:
+    ```bash
+    docker build -t ulaj/ulas-flask-app .
+    ```
+
+4. Docker imajını çalıştırarak test edin:
+    ```bash
+    docker run -p 80:80 ulaj/ulas-flask-app
+    ```
+
+## Docker Hub'a Yükleme
+
+Docker imajnı docker hub'a yüklemek için şu komutlar gerekiyor:
+
+```bash
+docker tag ulaj/ulas-flask-app ulaj/ulas-flask-app:latest
+docker push ulaj/ulas-flask-app:latest
+
+##Kubernetes Üzerinde Dağıtım
+
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+
+### Uygulamanın çalışıp çalışmadığını kontrol için: 
+
+kubectl get services
+
+### Ingress Controller ile uygulamanızı bir domaine veya IP adresine yönlendirmek için:
+kubectl apply -f ingress.yaml
+
+###Ölçeklendirme(3):
+kubectl scale deployment ulas-flask-app-deployment --replicas=3
+
+
+Sonuç Özeti: 
+Bu proje, Ulaş B. G. tarafından hazırlanan basit bir Flask web uygulamasının Docker ve Kubernetes kullanarak nasıl dağıtılacağını göstermektedir. Uygulama başarılı bir şekilde çalışmakta ve kolayca ölçeklendirilebilmektedir.
